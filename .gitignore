@@ -1,0 +1,8 @@
+.vscode/
+.idea/
+node_modules/
+.angular/
+*.exe
+Lib/
+Scripts/
+*.spec.ts
