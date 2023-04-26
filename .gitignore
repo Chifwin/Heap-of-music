@@ -6,3 +6,4 @@ node_modules/
 Lib/
 Scripts/
 *.spec.ts
+share/
