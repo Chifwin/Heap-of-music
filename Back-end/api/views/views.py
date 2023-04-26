@@ -40,6 +40,14 @@ def song_one(request, song_id):
     return JsonResponse({'error': "not implemented"}, status=http.HTTPStatus.BAD_REQUEST)
 
 
+@api_view(['GET'])
+def song_search(request):
+    song_title = request.GET.get('title', '')
+    songs = Song.objects.filter(title__icontains=f"{song_title}")
+    ser = SongSerializerMeta(songs, many=True)
+    return JsonResponse(ser.data, safe=False)
+
+
 @api_view(['GET', 'POST'])
 def album_list(request):
     if request.method == 'GET':
