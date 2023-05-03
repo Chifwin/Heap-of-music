@@ -2,12 +2,6 @@ from api.models import Song, Artist, Album
 from rest_framework import serializers
 
 
-class ArtistSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Artist
-        fields = ('name',)
-
-
 class SongSerializerMeta(serializers.ModelSerializer):
     song_link = serializers.ReadOnlyField(source='get_audio_path')
     image_link = serializers.ReadOnlyField(source='get_image_path')
@@ -35,21 +29,28 @@ class SongSerializer(serializers.Serializer):
 
 class AlbumSerializerMeta(serializers.ModelSerializer):
     image_link = serializers.ReadOnlyField(source='get_image_path')
-    songs = serializers.PrimaryKeyRelatedField(read_only=True)
+    song_set = SongSerializerMeta(many=True, read_only=True)
 
     class Meta:
         model = Album
-        fields = ('id', 'title', 'image_link', 'songs')
+        fields = ('id', 'title', 'image_link', 'song_set')
 
 
 class AlbumSerializer(serializers.Serializer):
     creator = serializers.HiddenField(default=serializers.CurrentUserDefault)
     title = serializers.CharField(max_length=100)
     cover = serializers.ImageField(write_only=True)
-    songs = serializers.PrimaryKeyRelatedField(read_only=True)
 
     def create(self, validated_data):
         pass
 
     def update(self, instance, validated_data):
         pass
+
+
+class ArtistSerializer(serializers.ModelSerializer):
+    song_set = SongSerializerMeta(many=True)
+
+    class Meta:
+        model = Artist
+        fields = ('id', 'name', 'song_set')

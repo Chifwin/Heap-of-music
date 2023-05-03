@@ -9,7 +9,7 @@ from api.models import Artist
 class ArtistList(APIView):
     def get(self, request):
         ser = ArtistSerializer(Artist.objects.all(), many=True)
-        return JsonResponse(ser.data)
+        return JsonResponse(ser.data, safe=False)
 
     def post(self, request):
         ser = ArtistSerializer(data=request.data)

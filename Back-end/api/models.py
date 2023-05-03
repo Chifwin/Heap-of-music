@@ -10,7 +10,7 @@ User = get_user_model()
 
 class Album(models.Model):
     title = models.CharField(max_length=100)
-    image = models.ImageField(upload_to=settings.MEDIA_ROOT / 'album_images')
+    image = models.ImageField(upload_to='album_images')
     creator_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -44,8 +44,8 @@ class Song(models.Model):
     title = models.CharField(max_length=100)
     is_public = models.BooleanField(default=True, blank=True)
 
-    audio_file = models.FileField(upload_to=settings.MEDIA_ROOT / 'audio')
-    image = models.ImageField(upload_to=settings.MEDIA_ROOT / 'song_images', null=True, blank=True)
+    audio_file = models.FileField(upload_to='audio')
+    image = models.ImageField(upload_to='song_images', null=True, blank=True)
 
     artists = models.ManyToManyField(Artist)
     album = models.ForeignKey(Album, models.CASCADE, null=True, blank=True)
