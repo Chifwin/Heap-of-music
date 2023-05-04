@@ -1,0 +1,9 @@
+.backg{
+    background: linear-gradient(gray, blue);
+    /* background-image: url(/assets/images/back1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover; */
+    width: 100%;
+    padding: 290px;
+    background-attachment: fixed;
+}

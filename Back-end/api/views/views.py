@@ -1,25 +1,29 @@
 import http
 from django.http import JsonResponse
 from api.models import Song, Album
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from .serializers import *
 
 
 @api_view(['GET', 'POST'])
+# @permission_classes([IsAuthenticated])
 def songs_list(request):
     if request.method == 'GET':
         ser = SongSerializerMeta(Song.objects.all(), many=True)
         return JsonResponse(ser.data, safe=False)
     if request.method == 'POST':
-        ser = SongSerializer(data=request.data)
+        ser = SongSerializer(data=request.data, context={'request': request})
         if ser.is_valid():
             ser.save()
             return JsonResponse(ser)
+        return JsonResponse({'error': "error data"}, status=http.HTTPStatus.BAD_REQUEST)
     return JsonResponse({'error': "not implemented"}, status=http.HTTPStatus.BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+# @permission_classes([IsAuthenticated])
 def song_one(request, song_id):
     try:
         song = Song.objects.get(id=song_id)
@@ -29,7 +33,7 @@ def song_one(request, song_id):
     if request.method == 'GET':
         return JsonResponse(SongSerializerMeta(song).data)
     if request.method == 'PUT':
-        ser = SongSerializerMeta(instance=song, data=request.data)
+        ser = SongSerializerMeta(instance=song, data=request.data, context={'request': request})
         if ser.is_valid():
             ser.save()
             return JsonResponse(ser.data)
@@ -49,12 +53,13 @@ def song_search(request):
 
 
 @api_view(['GET', 'POST'])
+# @permission_classes([IsAuthenticated])
 def album_list(request):
     if request.method == 'GET':
         ser = AlbumSerializerMeta(Album.objects.all(), many=True)
         return JsonResponse(ser.data, safe=False)
     if request.method == 'POST':
-        ser = AlbumSerializer(data=request.data)
+        ser = AlbumSerializer(data=request.data, context={'request': request})
         if ser.is_valid():
             ser.save()
             return JsonResponse(ser)
@@ -62,6 +67,7 @@ def album_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+# @permission_classes([IsAuthenticated])
 def album_one(request, album_id):
     try:
         album = Album.objects.get(id=album_id)
@@ -71,7 +77,7 @@ def album_one(request, album_id):
     if request.method == 'GET':
         return JsonResponse(AlbumSerializerMeta(album).data)
     if request.method == 'PUT':
-        ser = AlbumSerializer(instance=album, data=request.data)
+        ser = AlbumSerializer(instance=album, data=request.data, context={'request': request})
         if ser.is_valid():
             ser.save()
             return JsonResponse(ser.data)

@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 
 from .models import User
 from .serializers import UserSerializer
+from django.conf import settings
+
+JWT_SECRET = settings.SECRET_KEY
 
 
 class RegisterView(APIView):

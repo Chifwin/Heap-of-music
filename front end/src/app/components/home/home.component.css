@@ -1,0 +1,21 @@
+/* .container-home{
+    text-align: center;
+    margin-left: 130px;
+} */
+/* .home{
+    background-image: url(/assets/images/back1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* width: 100%;
+    padding: 100px;
+    background-attachment: fixed;
+} */
+.pos{
+    width:100%;
+    height:100%;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+.text{
+    color:#f7f7f9;
+}

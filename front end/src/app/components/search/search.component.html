@@ -1,0 +1,14 @@
+
+<div class="container">
+  <input type="text" [(ngModel)]="query" placeholder="Search music">
+  <button (click)="searchMusic()">Search</button>
+
+  <ul>
+    <li *ngFor="let music of musicResults">
+      <h3>{{ music.title }}</h3>
+      <!-- <audio controls>
+        <source [src]="music.url" type="audio/mpeg">
+      </audio> -->
+    </li>
+  </ul>
+</div>
