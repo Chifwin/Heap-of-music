@@ -8,12 +8,13 @@ import { ImportsComponent } from './components/imports/imports.component';
 import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
-  { path:'home', component:HomeComponent },
-  { path:'login', component:LoginComponent },
-  { path:'register', component:RegisterComponent },
-  { path:'player', component:PlayerComponent },
+  { path: 'home', component:HomeComponent },
+  { path: 'login', component:LoginComponent },
+  { path: 'register', component:RegisterComponent },
+  { path: 'player', component:PlayerComponent },
   { path: 'import', component: ImportsComponent},
-  { path: 'search', component:SearchComponent}
+  { path: 'search', component:SearchComponent},
+  { path: '', redirectTo: '/home', pathMatch: "full"},
 ];
 
 @NgModule({
